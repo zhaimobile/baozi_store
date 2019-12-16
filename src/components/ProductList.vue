@@ -8,7 +8,7 @@
 
 <script>
 import shop from "@/api/shop.js";
-import store from "@/store/index.js";
+//import store from "@/store/index.js";
 
 export default {
   name: "ProductList",
@@ -32,13 +32,13 @@ export default {
   },
   computed: {
     product_list() {
-      return store.state.products;
+      return this.$store.state.products;
     }
   },
   created() {
     shop.getProducts(x => {
       //store.state.products = x; #work but not correct
-      store.commit("setProducts", x);
+      this.$store.commit("setProducts", x);
     });
   }
 };
