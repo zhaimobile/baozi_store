@@ -1,22 +1,44 @@
 <template>
   <ul>
     <li v-for="product in product_list" :key="product.id">
-      {{ product.title }} -{{ product.price }}
+      {{ product.title }} -{{ product.price }} - {{ xxs }}
     </li>
   </ul>
 </template>
 
 <script>
 import shop from "@/api/shop.js";
+import store from "@/store/index.js";
 
 export default {
   name: "ProductList",
-  data: () => ({
-    product_list: []
-  }),
+  // data() {
+  //   return {
+  //     product_list: {},
+  //     xxs: "first way"
+  //   };
+  // },
+
+  // data: () => ({
+  //     product_list: {},
+  //     xxs: "second way"
+  // }),
+
+  data: function() {
+    return {
+      //product_list: {},
+      xxs: "third way"
+    };
+  },
+  computed: {
+    product_list() {
+      return store.state.products;
+    }
+  },
   created() {
     shop.getProducts(x => {
-      this.product_list = x;
+      //store.state.products = x; #work but not correct
+      store.commit("setProducts", x);
     });
   }
 };
